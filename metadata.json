@@ -1,0 +1,5 @@
+{
+  "name": "Data Protection Guide",
+  "description": "An interactive web application to teach users about personal data protection and secure passwords, culminating in a downloadable certificate.",
+  "requestFramePermissions": []
+}
