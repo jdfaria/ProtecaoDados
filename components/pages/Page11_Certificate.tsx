@@ -67,8 +67,13 @@ const Page11Certificate: React.FC = () => {
                     link.download = `Certificado-${name.trim().replace(/\s/g, '_') || 'Protecao_Dados'}.jpg`;
                     document.body.appendChild(link);
                     link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
+                    
+                    // Adicionar um atraso para garantir que o download é iniciado antes de limpar
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+
                 } else {
                     throw new Error("A criação do blob da imagem falhou.");
                 }
