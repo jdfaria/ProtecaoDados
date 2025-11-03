@@ -47,6 +47,7 @@ const CertificateContent = React.forwardRef<HTMLDivElement, { name: string, scor
 const Page11Certificate: React.FC = () => {
     const { state } = useContext(AppContext);
     const [name, setName] = useState('');
+    const [isDownloading, setIsDownloading] = useState(false);
     const certificateRef = useRef<HTMLDivElement>(null);
 
     const totalMaxScore = PERSONAL_DATA_MAX_SCORE + DETECT_RISK_MAX_SCORE + MATCH_PITFALLS_MAX_SCORE + QUIZ_MAX_SCORE;
@@ -54,7 +55,9 @@ const Page11Certificate: React.FC = () => {
     const finalPercentage = totalMaxScore > 0 ? Math.round((totalUserScore / totalMaxScore) * 100) : 0;
 
     const downloadCertificate = () => {
-        if (!certificateRef.current) return;
+        if (!certificateRef.current || isDownloading) return;
+
+        setIsDownloading(true);
         
         html2canvas(certificateRef.current, { scale: 2 }).then((canvas: any) => {
             const imgData = canvas.toDataURL('image/png');
@@ -66,6 +69,11 @@ const Page11Certificate: React.FC = () => {
             });
             pdf.addImage(imgData, 'PNG', 0, 0, 800, 565);
             pdf.save(`Certificado-${name.replace(/\s/g, '_') || 'Protecao_Dados'}.pdf`);
+        }).catch((error: any) => {
+            console.error("Ocorreu um erro ao descarregar o certificado:", error);
+            alert("Não foi possível descarregar o certificado. Por favor, tente novamente.");
+        }).finally(() => {
+            setIsDownloading(false);
         });
     };
 
@@ -88,9 +96,10 @@ const Page11Certificate: React.FC = () => {
                     />
                     <button
                         onClick={downloadCertificate}
-                        className="w-full mt-4 bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors"
+                        disabled={isDownloading}
+                        className="w-full mt-4 bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                     >
-                        Descarregar Certificado (.pdf)
+                        {isDownloading ? 'A descarregar...' : 'Descarregar Certificado (.pdf)'}
                     </button>
                 </div>
             </div>

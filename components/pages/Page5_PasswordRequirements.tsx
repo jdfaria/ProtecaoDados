@@ -23,7 +23,7 @@ const Page5PasswordRequirements: React.FC = () => {
                         <th className="p-3">EXEMPLOS</th>
                     </tr>
                 </thead>
-                <tbody className="text-gray-800">
+                <tbody className="text-black">
                     <tr className="border-b"><td className="p-3 font-medium">Letras minúsculas</td><td className="p-3 font-mono">a...z</td></tr>
                     <tr className="border-b"><td className="p-3 font-medium">Letras maiúsculas</td><td className="p-3 font-mono">A...Z</td></tr>
                     <tr className="border-b"><td className="p-3 font-medium">Números</td><td className="p-3 font-mono">0...9</td></tr>
