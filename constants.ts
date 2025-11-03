@@ -1,7 +1,7 @@
 
 import { DraggableItem } from './types';
 
-export const TOTAL_PAGES = 10;
+export const TOTAL_PAGES = 11;
 
 export const PERSONAL_DATA_ITEMS: DraggableItem[] = [
     { id: '1', content: 'Nome Completo', isPersonal: true },

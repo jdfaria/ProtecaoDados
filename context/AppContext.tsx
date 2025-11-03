@@ -1,6 +1,7 @@
 
 import React, { createContext, useReducer, Dispatch } from 'react';
 import { AppState, Action } from '../types';
+import { TOTAL_PAGES } from '../constants';
 
 const initialState: AppState = {
   currentPage: 1,
@@ -16,7 +17,7 @@ const initialState: AppState = {
 const appReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case 'NEXT_PAGE':
-      return { ...state, currentPage: Math.min(state.currentPage + 1, 10) };
+      return { ...state, currentPage: Math.min(state.currentPage + 1, TOTAL_PAGES) };
     case 'PREV_PAGE':
       return { ...state, currentPage: Math.max(state.currentPage - 1, 1) };
     case 'SET_PAGE':
