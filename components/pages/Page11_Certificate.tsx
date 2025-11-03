@@ -4,7 +4,6 @@ import { PERSONAL_DATA_MAX_SCORE, DETECT_RISK_MAX_SCORE, MATCH_PITFALLS_MAX_SCOR
 
 // Declare globals to satisfy TypeScript since they are loaded from CDN
 declare const html2canvas: any;
-declare const jspdf: any;
 
 // FIX: Removed the incorrect `React.FC` type. Components using `forwardRef` have a special type that accepts a `ref` prop, which `React.FC` does not.
 const CertificateContent = React.forwardRef<HTMLDivElement, { name: string, score: number }>(({ name, score }, ref) => {
@@ -55,20 +54,18 @@ const Page11Certificate: React.FC = () => {
     const finalPercentage = totalMaxScore > 0 ? Math.round((totalUserScore / totalMaxScore) * 100) : 0;
 
     const downloadCertificate = () => {
-        if (!certificateRef.current || isDownloading) return;
+        if (!certificateRef.current || isDownloading || !name.trim()) return;
 
         setIsDownloading(true);
         
         html2canvas(certificateRef.current, { scale: 2 }).then((canvas: any) => {
-            const imgData = canvas.toDataURL('image/png');
-            const { jsPDF } = jspdf;
-            const pdf = new jsPDF({
-                orientation: 'landscape',
-                unit: 'px',
-                format: [800, 565]
-            });
-            pdf.addImage(imgData, 'PNG', 0, 0, 800, 565);
-            pdf.save(`Certificado-${name.replace(/\s/g, '_') || 'Protecao_Dados'}.pdf`);
+            const imgData = canvas.toDataURL('image/jpeg');
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = `Certificado-${name.trim().replace(/\s/g, '_') || 'Protecao_Dados'}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }).catch((error: any) => {
             console.error("Ocorreu um erro ao descarregar o certificado:", error);
             alert("Não foi possível descarregar o certificado. Por favor, tente novamente.");
@@ -92,14 +89,14 @@ const Page11Certificate: React.FC = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="O seu nome aqui..."
-                        className="w-full p-2 border border-gray-300 rounded-md"
+                        className="w-full p-2 border border-gray-300 rounded-md bg-white text-black"
                     />
                     <button
                         onClick={downloadCertificate}
-                        disabled={isDownloading}
+                        disabled={isDownloading || !name.trim()}
                         className="w-full mt-4 bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                     >
-                        {isDownloading ? 'A descarregar...' : 'Descarregar Certificado (.pdf)'}
+                        {isDownloading ? 'A descarregar...' : 'Descarregar Certificado (.jpg)'}
                     </button>
                 </div>
             </div>
