@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import PageContainer from '../PageContainer';
 
@@ -35,7 +34,7 @@ const Page6PasswordTechniques: React.FC = () => {
                             type="text"
                             value={word}
                             onChange={(e) => setWord(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md mt-1 mb-4"
+                            className="w-full p-2 border border-gray-300 rounded-md mt-1 mb-4 bg-white text-black"
                         />
                         <div className="bg-white p-4 rounded-lg flex items-center justify-center text-xl md:text-2xl font-mono space-x-4">
                             <span>{word || "Palavra"}</span>
@@ -53,7 +52,7 @@ const Page6PasswordTechniques: React.FC = () => {
                             type="text"
                             value={phrase}
                             onChange={(e) => setPhrase(e.target.value)}
-                            className="w-full p-2 border border-gray-300 rounded-md mt-1 mb-4"
+                            className="w-full p-2 border border-gray-300 rounded-md mt-1 mb-4 bg-white text-black"
                         />
                         <div className="bg-white p-4 rounded-lg flex items-center justify-center text-xl md:text-2xl font-mono space-x-4">
                             <span>{phrase || "Frase Exemplo"}</span>

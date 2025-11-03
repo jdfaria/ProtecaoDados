@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import PageContainer from '../PageContainer';
 import { CheckIcon, XIcon } from '../icons';
@@ -43,7 +42,7 @@ const Page7PasswordChecker: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="A tua palavra-passe aqui..."
-                        className="w-full p-3 border border-gray-300 rounded-md mt-2 mb-6"
+                        className="w-full p-3 border border-gray-300 rounded-md mt-2 mb-6 bg-white text-black"
                     />
                     <div className="grid md:grid-cols-2 gap-6">
                         <ul className="space-y-2">
