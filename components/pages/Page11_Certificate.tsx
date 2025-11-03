@@ -59,13 +59,20 @@ const Page11Certificate: React.FC = () => {
         setIsDownloading(true);
         
         html2canvas(certificateRef.current, { scale: 2 }).then((canvas: any) => {
-            const imgData = canvas.toDataURL('image/jpeg');
-            const link = document.createElement('a');
-            link.href = imgData;
-            link.download = `Certificado-${name.trim().replace(/\s/g, '_') || 'Protecao_Dados'}.jpg`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            canvas.toBlob((blob: Blob | null) => {
+                if (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `Certificado-${name.trim().replace(/\s/g, '_') || 'Protecao_Dados'}.jpg`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                } else {
+                    throw new Error("A criação do blob da imagem falhou.");
+                }
+            }, 'image/jpeg', 0.95);
         }).catch((error: any) => {
             console.error("Ocorreu um erro ao descarregar o certificado:", error);
             alert("Não foi possível descarregar o certificado. Por favor, tente novamente.");
