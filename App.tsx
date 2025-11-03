@@ -13,7 +13,6 @@ import Page7PasswordChecker from './components/pages/Page7_PasswordChecker';
 import Page8PasswordCautions from './components/pages/Page8_PasswordCautions';
 import Page9ActivityMatchPitfalls from './components/pages/Page9_ActivityMatchPitfalls';
 import Page10Quiz from './components/pages/Page10_Quiz';
-import Page11Certificate from './components/pages/Page11_Certificate';
 import { TOTAL_PAGES } from './constants';
 
 const App: React.FC = () => {
@@ -41,8 +40,6 @@ const App: React.FC = () => {
         return <Page9ActivityMatchPitfalls />;
       case 10:
         return <Page10Quiz />;
-      case 11:
-        return <Page11Certificate />;
       default:
         return <Page1Intro />;
     }

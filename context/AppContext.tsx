@@ -16,7 +16,7 @@ const initialState: AppState = {
 const appReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case 'NEXT_PAGE':
-      return { ...state, currentPage: Math.min(state.currentPage + 1, 11) };
+      return { ...state, currentPage: Math.min(state.currentPage + 1, 10) };
     case 'PREV_PAGE':
       return { ...state, currentPage: Math.max(state.currentPage - 1, 1) };
     case 'SET_PAGE':
