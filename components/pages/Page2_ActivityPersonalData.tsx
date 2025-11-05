@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { PERSONAL_DATA_ITEMS, PERSONAL_DATA_MAX_SCORE } from '../../constants';
@@ -75,7 +74,8 @@ const Page2ActivityPersonalData: React.FC = () => {
       <p className="text-gray-600 mb-6">Arrasta cada item para a caixa correta para testar os teus conhecimentos.</p>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {Object.values(columns).map(col => (
+        {/* FIX: Explicitly type 'col' as 'Column' to resolve type inference issues with Object.values(). */}
+        {Object.values(columns).map((col: Column) => (
           <div 
             key={col.id}
             onDrop={(e) => handleDrop(e, col.id)}

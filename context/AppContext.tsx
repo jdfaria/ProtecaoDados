@@ -1,5 +1,5 @@
 
-import React, { createContext, useReducer, Dispatch } from 'react';
+import React, { createContext, useReducer, Dispatch, useEffect } from 'react';
 import { AppState, Action } from '../types';
 import { TOTAL_PAGES } from '../constants';
 
@@ -37,13 +37,38 @@ const appReducer = (state: AppState, action: Action): AppState => {
   }
 };
 
+const initializer = (initialValue = initialState) => {
+    try {
+        const item = window.localStorage.getItem('appState');
+        if (item) {
+            const parsedState = JSON.parse(item);
+            // Basic validation and merge to prevent crashes from old state structures
+            if (typeof parsedState.currentPage === 'number') {
+                return { ...initialValue, ...parsedState };
+            }
+        }
+    } catch (error) {
+        console.error("Error reading state from localStorage", error);
+    }
+    return initialValue;
+};
+
+
 export const AppContext = createContext<{ state: AppState; dispatch: Dispatch<Action> }>({
   state: initialState,
   dispatch: () => null,
 });
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [state, dispatch] = useReducer(appReducer, initialState);
+  const [state, dispatch] = useReducer(appReducer, initialState, initializer);
+
+  useEffect(() => {
+    try {
+        window.localStorage.setItem('appState', JSON.stringify(state));
+    } catch (error) {
+        console.error("Error saving state to localStorage", error);
+    }
+  }, [state]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
